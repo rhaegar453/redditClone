@@ -6,7 +6,6 @@ let url='https://www.reddit.com/r/';
 
 function* getSubredditsS(x){
     try{
-        console.log(x);
         yield(put(getSubredditsStart()));
         let data=yield axios.get(`${url}${x.payload}.json`);
         yield(put(getSubredditsSuccess(data)));

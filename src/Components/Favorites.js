@@ -9,17 +9,21 @@ class Favorites extends React.Component {
     constructor(props) {
         super(props);
     }
-    handleFavorite=(data, id)=>{
+    handleFavorite = (data, id) => {
         console.log(data, id);
-        this.props.removeFavorite({id});
+        this.props.removeFavorite({ id });
     }
     render() {
         return (
             <div>
                 <Navbar />
                 <div className="container">
-                    {this.props.favorites.map(item=>(
-                        <Post {...item} toggleFavorite={this.handleFavorite}/>
+                    {this.props.favorites.map(item => (
+                        <div className="row centeredCss">
+                            <div className="col-md-6 col-sm-12">
+                                <Post {...item} toggleFavorite={this.handleFavorite} key={item.id} />
+                            </div>
+                        </div>
                     ))}
                 </div>
             </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import './Post.css';
+import moment from 'moment';
 
 
 const Post = ({ id, isVideo, isImage, authorName, createdat, title, linkFlair, url, upvotes, imageURL, videoURL, comments, onMediaClick, isFavorite, toggleFavorite }) => {
@@ -9,9 +10,9 @@ const Post = ({ id, isVideo, isImage, authorName, createdat, title, linkFlair, u
                 {isFavorite ? <button className="btn btn-success" onClick={() => toggleFavorite('removeFavorite', id)} ><i className="fa fa-bookmark"></i></button> : <button className="btn btn-danger" onClick={() => toggleFavorite('makeFavorite', id)}><i className="fa fa-bookmark"></i></button>}
             </div>
             <div className="postBackground postCss">
-                <p className="infoText">Posted by {authorName} {createdat}</p>
+                <p className="infoText">Posted by {authorName} {moment.unix(createdat).fromNow()}</p>
                 <h3 className="titleText">{title} <span className="badge badge-primary linkFlairText">{linkFlair}</span></h3>
-                {url ? <a className="linkText" href={url}>{url}</a> : null}
+                {url ? <a className="linkText" href={url}>{url.length>30?`${url.substring(0, 30)}...`:url}</a> : null}
                 {(imageURL || videoURL) ? <div className="centeredCss">
                     <div>
                         {isImage && imageURL !== 'self' ? <div style={{ position: 'relative' }}>

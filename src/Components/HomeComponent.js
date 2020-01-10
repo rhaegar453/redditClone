@@ -12,8 +12,8 @@ const HomeComponent = (props) => {
                 <h1 className="fontHeader">Redditify</h1>
             </div>
             <div className="container" style={{textAlign:'center'}}>
-            {props.arr.map(item => (
-                <span className="pillBox" onClick={()=>props.history.push(`subreddit/${item.link}`)}>{item.label}</span>
+            {props.arr.map((item , index)=> (
+                <span key={index} className="pillBox" onClick={()=>props.history.push(`subreddit/${item.link}`)}>{item.label}</span>
             ))}
             </div>
             </div>

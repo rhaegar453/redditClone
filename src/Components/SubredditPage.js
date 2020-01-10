@@ -31,7 +31,7 @@ class SubredditPage extends React.Component {
         let data = this.props.location.pathname.split('/')[2];
         return (
             <div>
-                <Navbar/>
+                <Navbar />
                 <div className="container">
                     <Switch>
                         <Route path="/:label">
