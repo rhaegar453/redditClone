@@ -9,6 +9,7 @@ import { Switch, Route } from 'react-router-dom';
 import HomeComponent from './Components/HomeComponent';
 import Loader from 'react-content-loader';
 import SubredditPage from './Components/SubredditPage';
+import FavoritesPage from './Components/Favorites';
 
 let labels = [
   { label: 'Alternative', link: 'alternative' },
@@ -33,11 +34,11 @@ class App extends React.Component {
           <Route path="/" exact >
             <HomeComponent arr={labels} />
           </Route>
-          <Route path="/subreddit/:label">
-            <SubredditPage/>
+          <Route path="/subreddit">
+            <SubredditPage />
           </Route>
-          <Route path="/loader">
-            
+          <Route path="/favorites">
+            <FavoritesPage/>
           </Route>
         </Switch>
       </div>

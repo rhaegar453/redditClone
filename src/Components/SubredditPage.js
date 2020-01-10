@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Route, Switch } from 'react-router-dom';
 import Navbar from './Navbar';
 import Post from './Post';
 import { getSubreddits, makeFavorite, removeFavorite } from '../store/Actions/index';
 import Loader from './Loader';
+import Favorites from './Favorites';
 
 class SubredditPage extends React.Component {
     constructor(props) {
@@ -30,18 +31,22 @@ class SubredditPage extends React.Component {
         let data = this.props.location.pathname.split('/')[2];
         return (
             <div>
-                <Navbar />
+                <Navbar/>
                 <div className="container">
-                    <div>
-                        <h3 style={{ color: 'white', marginTop: "30px" }}>Showing Results for r/{data} </h3>
-                    </div>
-                    {this.props.subreddits.map(item => (
-                        <div className="row centeredCss" key={item.id}>
-                            <div className="col-md-6 col-sm-12">
-                                {this.props.loading ? <Loader /> : <Post {...item} toggleFavorite={this.favoriteHandler} />}
+                    <Switch>
+                        <Route path="/:label">
+                            <div>
+                                <h3 style={{ color: 'white', marginTop: "30px" }}>Showing Results for r/{data} </h3>
                             </div>
-                        </div>
-                    ))}
+                            {this.props.subreddits.map(item => (
+                                <div className="row centeredCss" key={item.id}>
+                                    <div className="col-md-6 col-sm-12">
+                                        {this.props.loading ? <Loader /> : <Post {...item} toggleFavorite={this.favoriteHandler} />}
+                                    </div>
+                                </div>
+                            ))}
+                        </Route>
+                    </Switch>
                 </div>
             </div>
         );
