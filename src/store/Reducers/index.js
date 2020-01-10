@@ -1,56 +1,78 @@
 import * as actions from '../ActionTypes/subreddits';
-import {structureData} from './helpers';
+import { structureData } from './helpers';
 import db from '../../Helpers/dexie';
 
-const initialState={
-    subreddits:[],
-    loading:false, 
-    error:false, 
-    favorites:[]
+const initialState = {
+    subreddits: [],
+    loading: false,
+    error: false,
+    favorites: []
 }
 
-const persistInDB=async(payload)=>{
-    try{
-        payload.map(async item=>{
+const persistInDB = async (payload) => {
+    try {
+        payload.map(async item => {
             await db.subreddits.put(item);
         })
     }
-    catch(err){
+    catch (err) {
         console.log(err);
     }
 }
 
 
-const reducer=(state=initialState, action)=>{
-    switch(action.type){
+const persistFavorite = async (data, value) => {
+    try {
+        if(value=='favorite'){
+            let changed={...data, isFavorite:true};
+            console.log(changed);
+            await db.subreddits.update(data, {isFavorite:true});
+            await db.favorites.put(changed);
+        }
+        else{
+            await db.subreddits.update(data, {isFavorite:false});
+            await db.favorites.delete(data.id);
+        }
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+const reducer = (state = initialState, action) => {
+    switch (action.type) {
         case actions.GET_SUBREDDITS_START:
-            return {...state, loading:true};
+            return { ...state, loading: true };
         case actions.GET_SUBREDDITS_FAILURE:
-            return {...state, error:true, loading:false}
+            return { ...state, error: true, loading: false }
         case actions.GET_SUBREDDITS_SUCCESS:
             persistInDB(action.payload);
-            return {...state, subreddits:action.payload, loading:false};
+            return { ...state, subreddits: action.payload, loading: false };
         case actions.MAKE_FAVORITE:
-            let item=state.subreddits.filter(item=>item.id==action.payload.id)[0];
-            let changed=state.subreddits.map(item=>{
-                if(item.id==action.payload.id){
-                    return {...item, isFavorite:true}
+            let item = state.subreddits.filter(item => item.id == action.payload.id)[0];
+            persistFavorite(item, 'favorite');  
+            let changed = state.subreddits.map(item => {
+                if (item.id == action.payload.id) {
+                    return { ...item, isFavorite: true }
                 }
                 else return item;
-            })
-            return {...state, favorites:[...state.favorites, item],subreddits:changed }
+            });
+            return { ...state, favorites: [...state.favorites, item], subreddits: changed }
         case actions.REMOVE_FAVORITE:
-            let changed1=state.subreddits.map(item=>{
-                if(item.id==action.payload.id){
-                    return {...item, isFavorite:false}
+            let item1=action.payload;
+            persistFavorite(item1, 'unfavorite');
+            let changed1 = state.subreddits.map(item => {
+                if (item.id == action.payload.id) {
+                    return { ...item, isFavorite: false }
                 }
-                else{
+                else {
                     return item;
                 }
             });
-            return {...state, favorites:state.favorites.filter(item=>item.id!==action.payload.id), subreddits:changed1}
+
+            return { ...state, favorites: state.favorites.filter(item => item.id !== action.payload.id), subreddits: changed1 }
         default:
-            return {...state};
+            return { ...state };
     }
 }
 

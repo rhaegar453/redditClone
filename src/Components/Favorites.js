@@ -4,21 +4,35 @@ import { makeFavorite, removeFavorite } from '../store/Actions/index';
 import Navbar from './Navbar';
 import "./HomeComponent.css";
 import Post from './Post';
+import db from '../Helpers/dexie';
 
 class Favorites extends React.Component {
     constructor(props) {
         super(props);
+        this.state={
+            favorites:[]
+        }
+    }
+    componentDidMount(){
+        db.favorites.toArray().then(data=>{
+            this.setState({favorites:data});
+        })
+        .catch(err=>{
+            console.log(err);
+        })
     }
     handleFavorite = (data, id) => {
-        console.log(data, id);
-        this.props.removeFavorite({ id });
+        this.setState((prevState)=>{
+            return {favorites:prevState.favorites.filter(item=>item.id!==id)}
+        })
+        this.props.removeFavorite({id});
     }
     render() {
         return (
             <div>
                 <Navbar />
                 <div className="container">
-                    {this.props.favorites.map(item => (
+                    {this.state.favorites.map(item => (
                         <div className="row centeredCss">
                             <div className="col-md-6 col-sm-12">
                                 <Post {...item} toggleFavorite={this.handleFavorite} key={item.id} />
