@@ -11,3 +11,5 @@ export const makeFavorite=({id})=>({type:actions.MAKE_FAVORITE, payload:id});
 export const removeFavorite=({id})=>({type:actions.REMOVE_FAVORITE, payload:id})
 
 
+export const getFromCache=(subreddit)=>({type:actions.GET_FROM_CACHE,payload:subreddit});
+

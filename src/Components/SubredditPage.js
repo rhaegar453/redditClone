@@ -3,21 +3,19 @@ import { connect } from 'react-redux';
 import { withRouter, Route, Switch } from 'react-router-dom';
 import Navbar from './Navbar';
 import Post from './Post';
-import { getSubreddits, makeFavorite, removeFavorite } from '../store/Actions/index';
+import { getSubreddits, makeFavorite, removeFavorite, getFromCache } from '../store/Actions/index';
 import Loader from './Loader';
-import Favorites from './Favorites';
+
+
 
 class SubredditPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-
-        }
     }
     componentDidMount() {
         let data = this.props.location.pathname.split('/')[2];
-        this.props.getData(data);
-        console.log(data);
+        /* this.props.getData(data); */
+        this.props.getFromCache(data);
     }
     favoriteHandler = (action, id) => {
         if (action == 'makeFavorite') {
@@ -64,6 +62,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         getData: (data) => dispatch(getSubreddits(data)),
+        getFromCache:(data)=>dispatch(getFromCache(data)), 
         makeFavorite: (id) => dispatch(makeFavorite({ id })),
         removeFavorite: (id) => dispatch(removeFavorite({ id }))
     }

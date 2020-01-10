@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.19.1",
     "bootstrap": "^4.4.1",
+    "dexie": "^2.0.4",
     "font-awesome": "^4.7.0",
     "jquery": "^3.4.1",
     "lodash": "^4.17.15",

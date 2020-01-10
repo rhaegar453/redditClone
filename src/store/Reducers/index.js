@@ -1,11 +1,23 @@
 import * as actions from '../ActionTypes/subreddits';
 import {structureData} from './helpers';
+import db from '../../Helpers/dexie';
 
 const initialState={
     subreddits:[],
     loading:false, 
     error:false, 
     favorites:[]
+}
+
+const persistInDB=async(payload)=>{
+    try{
+        payload.map(async item=>{
+            await db.subreddits.put(item);
+        })
+    }
+    catch(err){
+        console.log(err);
+    }
 }
 
 
@@ -16,7 +28,8 @@ const reducer=(state=initialState, action)=>{
         case actions.GET_SUBREDDITS_FAILURE:
             return {...state, error:true, loading:false}
         case actions.GET_SUBREDDITS_SUCCESS:
-            return {...state, subreddits:structureData(action.payload.data.data.children), loading:false};
+            persistInDB(action.payload);
+            return {...state, subreddits:action.payload, loading:false};
         case actions.MAKE_FAVORITE:
             let item=state.subreddits.filter(item=>item.id==action.payload.id)[0];
             let changed=state.subreddits.map(item=>{

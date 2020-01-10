@@ -19,6 +19,7 @@ export const structureData = (arr) => {
         if (isGIF) {
             return {
                 id: item.id,
+                subreddit:item.subreddit,
                 authorName: item.author_fullname,
                 title: item.title,
                 upvotes: item.ups,
@@ -37,6 +38,7 @@ export const structureData = (arr) => {
         else if (isVideo) {
             return {
                 id: item.id,
+                subreddit:item.subreddit,
                 authorName: item.author_fullname,
                 title: item.title,
                 upvotes: item.ups,
@@ -55,6 +57,7 @@ export const structureData = (arr) => {
         else {
             return {
                 id: item.id,
+                subreddit:item.subreddit.toLowerCase(),
                 authorName: item.author_fullname,
                 title: item.title,
                 upvotes: item.ups,
@@ -67,7 +70,7 @@ export const structureData = (arr) => {
                 imageURL: item.thumbnail,
                 videoURL: null,
                 isFavorite: false,
-                isGIF: item.preview
+                isGIF: false
             }
         }
     });

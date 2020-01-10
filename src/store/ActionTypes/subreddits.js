@@ -8,6 +8,8 @@ export const MAKE_FAVORITE='MAKE_FAVORITE';
 export const REMOVE_FAVORITE='REMOVE_FAVORITE';
 
 
+export const GET_FROM_CACHE='GET_FROM_CACHE';
+
 
 
 
