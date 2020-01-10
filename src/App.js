@@ -7,6 +7,7 @@ import { makeFavorite, removeFavorite } from './store/Actions/index';
 import Navbar from './Components/Navbar';
 import { Switch, Route } from 'react-router-dom';
 import HomeComponent from './Components/HomeComponent';
+import Loader from 'react-content-loader';
 import SubredditPage from './Components/SubredditPage';
 
 let labels = [
@@ -34,6 +35,9 @@ class App extends React.Component {
           </Route>
           <Route path="/subreddit/:label">
             <SubredditPage/>
+          </Route>
+          <Route path="/loader">
+            
           </Route>
         </Switch>
       </div>

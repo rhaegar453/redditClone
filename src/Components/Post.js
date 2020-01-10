@@ -23,7 +23,6 @@ const Post = ({ id, isVideo, isImage, authorName, createdat, title, linkFlair, u
                         {isVideo ? <div style={{ position: 'relative' }}>
                             <video width={"300px"} style={{ borderRadius: "12px", outline: 'none' }} controls>
                                 <source src={videoURL} type="video/mp4"></source>
-                                <source src={videoURL} type="video/ogg"></source>
                             </video>
                         </div> : null}
                     </div>

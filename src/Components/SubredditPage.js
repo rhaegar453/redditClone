@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import Navbar from './Navbar';
 import Post from './Post';
 import { getSubreddits, makeFavorite, removeFavorite } from '../store/Actions/index';
+import Loader from './Loader';
 
 class SubredditPage extends React.Component {
     constructor(props) {
@@ -37,7 +38,7 @@ class SubredditPage extends React.Component {
                     {this.props.subreddits.map(item => (
                         <div className="row centeredCss" key={item.id}>
                             <div className="col-md-6 col-sm-12">
-                                <Post {...item} toggleFavorite={this.favoriteHandler} />
+                                {this.props.loading ? <Loader /> : <Post {...item} toggleFavorite={this.favoriteHandler} />}
                             </div>
                         </div>
                     ))}
@@ -50,7 +51,8 @@ class SubredditPage extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        subreddits: state.subreddits
+        subreddits: state.subreddits,
+        loading: state.loading
     }
 }
 

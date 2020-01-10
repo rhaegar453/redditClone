@@ -17,7 +17,7 @@ const reducer=(state=initialState, action)=>{
             return {...state, error:true, loading:false}
         case actions.GET_SUBREDDITS_SUCCESS:
             console.log(structureData(action.payload.data.data.children))
-            return {...state, subreddits:structureData(action.payload.data.data.children), loading:true};
+            return {...state, subreddits:structureData(action.payload.data.data.children), loading:false};
         case actions.MAKE_FAVORITE:
             let item=state.subreddits.filter(item=>item.id==action.payload.id)[0];
             let changed=state.subreddits.map(item=>{
