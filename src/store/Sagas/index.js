@@ -4,10 +4,11 @@ import {getSubreddits, getSubredditsFailure, getSubredditsStart, getSubredditsSu
 import axios from 'axios';
 let url='https://www.reddit.com/r/';
 
-function* getSubredditsS(){
+function* getSubredditsS(x){
     try{
+        console.log(x);
         yield(put(getSubredditsStart()));
-        let data=yield axios.get(`${url}cats.json`);
+        let data=yield axios.get(`${url}${x.payload}.json`);
         yield(put(getSubredditsSuccess(data)));
     }
     catch(err){

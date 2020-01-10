@@ -9,6 +9,7 @@ import createSagaMiddleware from 'redux-saga';
 import reducer from './store/Reducers/index';
 import rootSaga from './store/Sagas/index';
 import {Provider} from 'react-redux';
+import {BrowserRouter} from 'react-router-dom';
 
 
 
@@ -20,7 +21,7 @@ sagaMiddleware.run(rootSaga);
 
 
 
-ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
+ReactDOM.render(<Provider store={store}><BrowserRouter><App /></BrowserRouter></Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

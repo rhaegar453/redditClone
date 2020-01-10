@@ -3,37 +3,39 @@ import Post from './Components/Post';
 import { connect } from 'react-redux';
 import { getSubreddits } from './store/Actions/index';
 import { structureData } from './store/Reducers/helpers';
-import {makeFavorite, removeFavorite} from './store/Actions/index';
+import { makeFavorite, removeFavorite } from './store/Actions/index';
 import Navbar from './Components/Navbar';
+import { Switch, Route } from 'react-router-dom';
+import HomeComponent from './Components/HomeComponent';
+import SubredditPage from './Components/SubredditPage';
+
+let labels = [
+  { label: 'Alternative', link: 'alternative' },
+  { label: 'Pics', link: 'pics' },
+  { label: 'Gifs', link: 'gifs' },
+  { label: 'Advice Animals', link: 'adviceanimals' },
+  { label: 'Cats', link: 'cats' },
+  { label: 'Images', link: 'images' },
+  { label: 'Photoshop Battles', link: 'photoshopbattles' },
+  { label: 'Hmmm', link: 'hmmm' },
+  { label: 'All', link: 'all' },
+  { label: 'Aww', link: 'aww' }];
 
 class App extends React.Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount() {
-    this.props.getData()
-  }
-  favoriteHandler=(action, id)=>{
-    if(action=='makeFavorite'){
-      this.props.makeFavorite({id});
-    }
-    else{
-      this.props.removeFavorite({id});
-    }
-  }
   render() {
     return (
       <div>
-        <Navbar />
-        <div className="container">
-          {this.props.subreddits.map(item => (
-            <div className="row centeredCss" key={item.id}>
-              <div className="col-md-6 col-sm-12">
-                <Post {...item} toggleFavorite={this.favoriteHandler}/>
-              </div>
-            </div>
-          ))}
-        </div>
+        <Switch>
+          <Route path="/" exact >
+            <HomeComponent arr={labels} />
+          </Route>
+          <Route path="/subreddit/:label">
+            <SubredditPage/>
+          </Route>
+        </Switch>
       </div>
     );
   }
@@ -47,9 +49,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getData: () => dispatch(getSubreddits()), 
-    makeFavorite:(id)=>dispatch(makeFavorite({id})), 
-    removeFavorite:(id)=>dispatch(removeFavorite({id}))
+    getData: () => dispatch(getSubreddits()),
+    makeFavorite: (id) => dispatch(makeFavorite({ id })),
+    removeFavorite: (id) => dispatch(removeFavorite({ id }))
   }
 }
 
