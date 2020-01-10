@@ -1,35 +1,27 @@
 import {put,takeEvery, all} from 'redux-saga/effects';
-import * as actions from '../ActionTypes/index';
-import {decrementValue, incrementValue, increment, decrement} from '../Actions/index';
+import * as actions from '../ActionTypes/subreddits';
+import {getSubreddits, getSubredditsFailure, getSubredditsStart, getSubredditsSuccess} from '../Actions/index';
+import axios from 'axios';
+let url='https://www.reddit.com/r/';
 
-const delay=(ms)=>new Promise((res)=>setTimeout(res, ms));
-
-
-
-function* helloSaga(){
-    console.log("Hello World this is the boilerplate");
+function* getSubredditsS(){
+    try{
+        yield(put(getSubredditsStart()));
+        let data=yield axios.get(`${url}cats.json`);
+        yield(put(getSubredditsSuccess(data)));
+    }
+    catch(err){
+        yield(put(getSubredditsFailure(err)));
+    }
 }
 
-function* incrementAsync(){
-    console.log("Incrementing the value");
-    yield delay(1000);
-    yield(put(increment()));
-}
-function* decrementAsync(){
-    console.log("Decrementing the value");
-    yield delay(1000);
-    yield(put(decrement()));
-}
 
 function* watchActions(){
-    yield takeEvery(actions.HELLO_WORLD, helloSaga);
-    yield takeEvery(actions.INCREMENT_VALUE,incrementAsync);
-    yield takeEvery(actions.DECREMENT_VALUE, decrementAsync);
+    yield takeEvery(actions.GET_SUBREDDITS, getSubredditsS);
 }
 
 export default function* rootSaga(){
     yield all([
-        helloSaga(),
         watchActions()
     ])
 }
