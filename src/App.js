@@ -3,6 +3,8 @@ import Post from './Components/Post';
 import { connect } from 'react-redux';
 import { getSubreddits } from './store/Actions/index';
 import { structureData } from './store/Reducers/helpers';
+import {makeFavorite, removeFavorite} from './store/Actions/index';
+import Navbar from './Components/Navbar';
 
 class App extends React.Component {
   constructor(props) {
@@ -11,14 +13,27 @@ class App extends React.Component {
   componentDidMount() {
     this.props.getData()
   }
+  favoriteHandler=(action, id)=>{
+    if(action=='makeFavorite'){
+      this.props.makeFavorite({id});
+    }
+    else{
+      this.props.removeFavorite({id});
+    }
+  }
   render() {
     return (
       <div>
-        {this.props.subreddits.map(item => (
-          <div style={{width:'65%', margin:'auto'}}>
-            <Post {...item} />
-          </div>
-        ))}
+        <Navbar />
+        <div className="container">
+          {this.props.subreddits.map(item => (
+            <div className="row centeredCss" key={item.id}>
+              <div className="col-md-6 col-sm-12">
+                <Post {...item} toggleFavorite={this.favoriteHandler}/>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
@@ -32,7 +47,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getData: () => dispatch(getSubreddits())
+    getData: () => dispatch(getSubreddits()), 
+    makeFavorite:(id)=>dispatch(makeFavorite({id})), 
+    removeFavorite:(id)=>dispatch(removeFavorite({id}))
   }
 }
 

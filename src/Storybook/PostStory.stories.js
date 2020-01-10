@@ -21,6 +21,7 @@ export const withImage = () => {
             upvotes="3.5K"
             comments="2K"
             isVideo={true}
+            isFavorite={true}
         />
         <Post authorName="Shivaraj Bakale" createdat="18 Hours ago"
             title="Hey there this is my First Post on Cats. Hey there"

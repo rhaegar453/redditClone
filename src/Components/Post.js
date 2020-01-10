@@ -1,11 +1,12 @@
 import React from 'react';
-import './Post.css'
+import './Post.css';
 
-const imagePost = ({ isVideo, isImage, authorName, createdat, title, linkFlair, url, upvotes, imageURL,videoURL, comments, onMediaClick,isFavorite, toggleFavorite}) => {
+
+const Post = ({id, isVideo, isImage, authorName, createdat, title, linkFlair, url, upvotes, imageURL,videoURL, comments, onMediaClick,isFavorite, toggleFavorite}) => {
     return (
-        <div className="post">
+        <div>
             <div style={{ float: 'right', marginTop:"5px", marginRight:"5px" }}>
-                {isFavorite?<button className="btn btn-success" onClick={toggleFavorite}><i class="fa fa-bookmark"></i></button>:<button className="btn btn-danger" onClick={()=>toggleFavorite('unfavorite')}><i class="fa fa-bookmark"></i></button>}
+                {isFavorite?<button className="btn btn-success" onClick={()=>toggleFavorite('removeFavorite',id)} ><i class="fa fa-bookmark"></i></button>:<button className="btn btn-danger"  onClick={()=>toggleFavorite('makeFavorite',id)}><i class="fa fa-bookmark"></i></button>}
             </div>
             <div className="postBackground postCss">
                 <p className="infoText">Posted by {authorName} {createdat}</p>
@@ -13,8 +14,8 @@ const imagePost = ({ isVideo, isImage, authorName, createdat, title, linkFlair, 
                 {url ? <a className="linkText" href={url}>{url}</a> : null}
                 {(imageURL||videoURL)? <div className="centeredCss">
                     <div>
-                        {isImage ? <div style={{ position: 'relative' }}>
-                            <img src={imageURL} width={"400px"} style={{ borderRadius: "12px" }}></img>
+                        {isImage&&imageURL!=='self'? <div style={{ position: 'relative' }}>
+                            <img src={imageURL} style={{ borderRadius: "12px", width:"300px" }}></img>
                             <div className="centerButtonAbsolute">
                                 <button className="btn btn-outline-danger btn-sm buttonOpenImage" onClick={() => onMediaClick(imageURL)}>Open Full Image</button>
                             </div>
@@ -42,4 +43,4 @@ const imagePost = ({ isVideo, isImage, authorName, createdat, title, linkFlair, 
 }
 
 
-export default imagePost;
+export default Post;

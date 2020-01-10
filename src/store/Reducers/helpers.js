@@ -12,7 +12,8 @@ export const structureData=(arr)=>{
             isVideo:item.is_video,
             isImage:!item.is_video?true:false, 
             imageURL:item.thumbnail,
-            videoURL:item.is_video?item.media.reddit_video.fallback_url:null
+            videoURL:item.is_video?item.media.reddit_video.fallback_url:null,
+            isFavorite:false
         }
     });
 }

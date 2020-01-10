@@ -73,3 +73,21 @@
 body{
     background-color: #CB4141;
 }
+
+
+.navbarCss{
+    background-color: #9F3131;
+    box-shadow: -6px 0px 10px rgba(0, 0, 0, 0.61), 0px 4px 4px rgba(0, 0, 0, 0.25);
+    color: white;
+}
+
+.navbar-brand{
+    color: white;
+}
+
+
+.navbar-nav .nav-link {
+    padding-right: 0;
+    padding-left: 0;
+    color: white;
+}
