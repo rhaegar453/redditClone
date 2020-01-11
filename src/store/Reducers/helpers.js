@@ -49,7 +49,7 @@ export const structureData = (arr) => {
                 isVideo: true,
                 isImage: false,
                 imageURL: item.thumbnail,
-                videoURL: item.item.media.reddit_video.fallback_url,
+                videoURL: item.media.reddit_video.fallback_url,
                 isFavorite: false,
                 isGIF: true
             }

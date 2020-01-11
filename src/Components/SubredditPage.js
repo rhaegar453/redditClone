@@ -14,7 +14,6 @@ class SubredditPage extends React.Component {
     }
     componentDidMount() {
         let data = this.props.location.pathname.split('/')[2];
-        /* this.props.getData(data); */
         this.props.getFromCache(data);
     }
     favoriteHandler = (action, id) => {

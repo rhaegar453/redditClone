@@ -9,10 +9,12 @@ function* getSubredditsS(x){
     try{
         yield(put(getSubredditsStart()));
         let data=yield axios.get(`${url}${x.payload}.json`);
+        console.log(data);
         let structuredData=yield structureData(data.data.data.children);
         yield(put(getSubredditsSuccess(structuredData)));
     }
     catch(err){
+        console.log(err);
         yield(put(getSubredditsFailure(err)));
     }
 }
