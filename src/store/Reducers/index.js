@@ -25,7 +25,6 @@ const persistFavorite = async (data, value) => {
     try {
         if(value=='favorite'){
             let changed={...data, isFavorite:true};
-            console.log(changed);
             await db.subreddits.update(data, {isFavorite:true});
             await db.favorites.put(changed);
         }

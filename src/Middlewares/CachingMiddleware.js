@@ -4,9 +4,7 @@ import db from '../Helpers/dexie';
 
 export const cache = ({ getState, dispatch }) => next => async action => {
     try {
-        console.log(action);
         if (action.type == actionTypes.GET_FROM_CACHE) {
-            console.log(action);
             let cache = await db.subreddits.where('subreddit').equals(action.payload).toArray();
             if (cache.length > 0) {
                 dispatch(actions.getSubredditsSuccess(cache));

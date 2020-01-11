@@ -16,10 +16,7 @@ class Favorites extends React.Component {
     componentDidMount(){
         db.favorites.toArray().then(data=>{
             this.setState({favorites:data});
-        })
-        .catch(err=>{
-            console.log(err);
-        })
+        });
     }
     handleFavorite = (data, id) => {
         this.setState((prevState)=>{
